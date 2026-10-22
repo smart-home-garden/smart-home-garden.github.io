@@ -54,7 +54,7 @@
 
   <footer>
     <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
-    <p class="note">*Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+    <p class="note">Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
 
     <section class="legal" id="impressum">
       <h3>Impressum</h3>
@@ -65,34 +65,71 @@
 
     <section class="legal" id="datenschutz">
       <h3>Datenschutzerklärung</h3>
-      <p>[Hier deine Datenschutzerklärung einfügen – z. B. mit einem kostenlosen Generator erstellen. Hinweis auf Hosting über GitHub Pages aufnehmen.]</p>
+      <p>[Hier deine Datenschutzerklärung einfügen – z. B. mit einem kostenlosen Generator erstellen.]</p>
+      <p>Hosting: Diese Seite wird über GitHub Pages (GitHub Inc.) bereitgestellt. Beim Aufruf der Seite und beim automatischen Laden der PDF-Liste wird deine IP-Adresse an GitHub übermittelt.</p>
     </section>
   </footer>
 </div>
 
 <script>
   /* ======================================================
-     HIER PFLEGST DU DEINE PDFs
-     1. PDF in den Ordner "pdfs" hochladen
-     2. Unten einen Eintrag ergänzen (Komma nicht vergessen)
-     ====================================================== */
-  const pdfs = [
-    { titel: "Der smarte Hausgarten",  info: "Checkliste: Kabel, Steckdosen & Leuchten", datei: "dersmartehausgarten.pdf" },
-    { titel: "Steckdosen und Beleuchtung",  info: "Worauf du beim Kauf achten solltest",      datei: "steckdosenundbeleuchtung.pdf" },
-  ];
+     SO FUNKTIONIERT DIE SEITE
+     Jedes PDF im Ordner "pdfs" erscheint automatisch hier.
+     Du musst nur das PDF hochladen – fertig.
 
+     OPTIONAL: Schoene Titel und Beschreibungen
+     Ohne Eintrag wird der Titel aus dem Dateinamen gebildet
+     (z. B. "maehroboter-ratgeber.pdf" -> "Maehroboter Ratgeber").
+     Mit Eintrag unten bestimmst du Titel, Text und Reihenfolge.
+     ====================================================== */
+  const beschreibungen = {
+    "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home" },
+    "rasenguide.pdf":               { titel: "Vom Wildwuchs zum Traumrasen",           info: "Dein ehrlicher Schritt-für-Schritt-Guide zum satten Grün" },
+    "mediterranepflanzen.pdf":      { titel: "Mediterrane Pflanzen richtig schneiden", info: "Olivenbaum bis Oleander – schneiden, überwintern, neu starten" },
+    "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten" },
+  };
+
+  const REPO = "smart-home-garden/smart-home-garden.github.io";
   const list = document.getElementById("list");
-  pdfs.forEach(p => {
-    const a = document.createElement("a");
-    a.className = "item";
-    a.href = "pdfs/" + p.datei;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.innerHTML = `<div class="icon">PDF</div>
-      <div><h2>${p.titel}</h2><p>${p.info}</p></div>
-      <span class="arrow">↓</span>`;
-    list.appendChild(a);
-  });
+
+  function titelAusDateiname(datei) {
+    return datei.replace(/\.pdf$/i, "").replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  function zeigen(dateien) {
+    const reihenfolge = Object.keys(beschreibungen);
+    dateien.sort((a, b) => {
+      const ia = reihenfolge.indexOf(a), ib = reihenfolge.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
+    list.innerHTML = "";
+    dateien.forEach(datei => {
+      const meta = beschreibungen[datei] || {};
+      const a = document.createElement("a");
+      a.className = "item";
+      a.href = "pdfs/" + encodeURIComponent(datei);
+      a.target = "_blank";
+      a.rel = "noopener";
+      const h2 = document.createElement("h2"); h2.textContent = meta.titel || titelAusDateiname(datei);
+      const p = document.createElement("p");   p.textContent = meta.info || "PDF zum Download";
+      const text = document.createElement("div"); text.append(h2, p);
+      const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = "PDF";
+      const arrow = document.createElement("span"); arrow.className = "arrow"; arrow.textContent = "↓";
+      a.append(icon, text, arrow);
+      list.appendChild(a);
+    });
+  }
+
+  // Liest den Ordner "pdfs" direkt aus GitHub aus.
+  // Klappt das mal nicht, werden die Eintraege oben angezeigt.
+  fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(items => zeigen(items.filter(f => f.type === "file" && /\.pdf$/i.test(f.name)).map(f => f.name)))
+    .catch(() => zeigen(Object.keys(beschreibungen)));
 </script>
 </body>
 </html>
