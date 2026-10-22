@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 30 600 200" width="600" height="200" role="img" aria-label="smart.home.garden"><defs><mask id="imagine-text-gaps-b2nman" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="680" height="520" fill="white" /><rect x="214" y="86" width="127.046875" height="37" fill="black" rx="2" /><rect x="334" y="86" width="109.84375" height="37" fill="black" rx="2" /><rect x="214" y="122.5" width="164.2890625" height="37.5" fill="black" rx="2" /><rect x="214" y="159.5" width="284.875" height="17" fill="black" rx="2" /><rect x="318.23046875" y="407.5" width="43.5390625" height="19.5" fill="black" rx="2" /><rect x="289.06640625" y="243.5" width="101.8671875" height="15.5" fill="black" rx="2" /><rect x="297.56640625" y="478.5" width="84.8671875" height="15.5" fill="black" rx="2" /></mask></defs>
+  <rect x="40" y="30" width="600" height="200" rx="16" fill="rgb(17, 17, 17)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <circle cx="130" cy="130" r="68" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.2px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <circle cx="130" cy="130" r="58" fill="none" stroke="rgb(201, 168, 76)" stroke-width="0.6px" stroke-linecap="butt" stroke-linejoin="miter" opacity="0.4" font-size="16px" font-weight="400" text-anchor="start" />
+
+  
+  <polygon points="130,72 170,105 170,155 90,155 90,105" fill="rgb(26, 26, 26)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <polyline points="78,108 130,68 182,108" fill="none" stroke="rgb(201, 168, 76)" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="round" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <rect x="90" y="105" width="80" height="50" rx="2" fill="none" stroke="rgb(201, 168, 76)" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="round" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  
+  <rect x="118" y="128" width="24" height="27" rx="3" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.5px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  
+  <rect x="97" y="112" width="18" height="16" rx="2" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.2px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <line x1="106" y1="112" x2="106" y2="128" stroke="rgb(201, 168, 76)" stroke-width="0.8px" fill="rgb(0, 0, 0)" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <line x1="97" y1="120" x2="115" y2="120" stroke="rgb(201, 168, 76)" stroke-width="0.8px" fill="rgb(0, 0, 0)" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+
+  
+  <path d="M168,152 Q194,130 195,104 Q172,110 168,152Z" fill="rgb(26, 26, 26)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <path d="M168,152 Q194,130 195,104 Q172,110 168,152Z" fill="none" stroke="rgb(125, 184, 125)" stroke-width="1.8px" stroke-linecap="round" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <line x1="168" y1="152" x2="184" y2="122" fill="none" stroke="rgb(125, 184, 125)" stroke-width="1.8px" stroke-linecap="round" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+
+  
+  <path d="M170,155 Q188,147 192,134 Q176,135 170,155Z" fill="rgb(26, 26, 26)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <path d="M170,155 Q188,147 192,134 Q176,135 170,155Z" stroke="rgb(125, 184, 125)" stroke-width="1.4px" fill="none" stroke-linecap="round" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+  <line x1="170" y1="155" x2="183" y2="143" stroke="rgb(125, 184, 125)" stroke-width="1.4px" stroke-linecap="round" fill="rgb(0, 0, 0)" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+
+  
+  <path d="M148,82 Q157,74 168,74" opacity="0.4" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="miter" font-size="16px" font-weight="400" text-anchor="start" />
+  <path d="M144,88 Q157,76 172,76" opacity="0.65" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="miter" font-size="16px" font-weight="400" text-anchor="start" />
+  <path d="M140,94 Q157,78 176,78" opacity="0.9" fill="none" stroke="rgb(201, 168, 76)" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="miter" font-size="16px" font-weight="400" text-anchor="start" />
+  <circle cx="140" cy="100" r="2.5" fill="rgb(201, 168, 76)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="16px" font-weight="400" text-anchor="start" />
+
+  
+  <text x="218" y="115" fill="rgb(240, 230, 200)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="28px" font-weight="300" text-anchor="start" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif">SMART</text>
+  <text x="338" y="115" fill="rgb(240, 230, 200)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="28px" font-weight="300" text-anchor="start" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif">HOME</text>
+  <line x1="218" y1="126" x2="560" y2="126" mask="url(#imagine-text-gaps-b2nman)" fill="rgb(0, 0, 0)" stroke="rgb(201, 168, 76)" stroke-width="0.6px" stroke-linecap="butt" stroke-linejoin="miter" opacity="0.5" font-size="16px" font-weight="400" text-anchor="start" />
+  <text x="218" y="152" fill="rgb(201, 168, 76)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="28px" font-weight="600" text-anchor="start" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif">GARDEN</text>
+  <text x="218" y="172" fill="rgb(136, 136, 136)" stroke="none" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" opacity="1" font-size="11px" font-weight="300" text-anchor="start" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif">SMARTHOME · TECHNIK · DESIGN</text>
+
+  
+  </svg>
