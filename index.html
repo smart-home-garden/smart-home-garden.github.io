@@ -35,6 +35,17 @@
   .legal:target{display:block}
   .legal h3{color:var(--gold);margin-bottom:8px}
   .legal p{margin-bottom:8px}
+
+  /* ── Newsletter ── Zum Aktivieren: display:none entfernen ── */
+  .nl-section{display:none;text-align:center;margin:36px 0 0;padding:28px 20px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .nl-section h2{font-size:1.05rem;color:var(--gold);margin-bottom:6px}
+  .nl-section p{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+  .nl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .nl-form input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#111;color:var(--text);font-size:.95rem;outline:none}
+  .nl-form input[type=email]:focus{border-color:var(--gold)}
+  .nl-form button{padding:12px 22px;border-radius:10px;border:none;background:var(--gold);color:#0e0e0e;font-weight:700;font-size:.95rem;cursor:pointer;white-space:nowrap}
+  .nl-form button:hover{opacity:.88}
+  .nl-hint{color:var(--muted);font-size:.78rem;margin-top:10px}
 </style>
 </head>
 <body>
@@ -48,6 +59,27 @@
   <main class="list" id="list"></main>
 
   <a class="insta" href="https://www.instagram.com/smart.home.garden/" target="_blank" rel="noopener">→ Folge mir auf Instagram</a>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       NEWSLETTER-BLOCK
+       Zum Aktivieren: in der CSS-Klasse ".nl-section" oben
+       "display:none" entfernen.
+
+       Dann hier deine MailerLite-Formular-Action-URL eintragen:
+       1. MailerLite-Konto anlegen auf mailerlite.com
+       2. Forms → Embedded form erstellen
+       3. Die "action"-URL aus dem generierten HTML-Code kopieren
+       4. Unten bei action="DEINE_MAILERLITE_URL" einfügen
+       ══════════════════════════════════════════════════════════════ -->
+  <section class="nl-section">
+    <h2>Neue Guides direkt per Mail</h2>
+    <p>Ich informiere dich, sobald ein neues kostenloses eBook erscheint.</p>
+    <form class="nl-form" action="DEINE_MAILERLITE_URL" method="POST" target="_blank">
+      <input type="email" name="fields[email]" placeholder="deine@email.de" required>
+      <button type="submit">Kostenlos anmelden</button>
+    </form>
+    <p class="nl-hint">Kein Spam. Nur neue Guides. Jederzeit abmeldbar.</p>
+  </section>
 
   <footer>
     <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
