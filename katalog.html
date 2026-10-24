@@ -39,10 +39,7 @@
   }
   .search-wrap input:focus{border-color:var(--gold)}
 
-  /* 2-Spalten Grid */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;justify-items:center}
-  .grid .card{width:100%}
-  @media(max-width:480px){.grid{grid-template-columns:1fr}}
+  .grid{display:flex;flex-direction:column;gap:14px}
 
   .card{
     display:flex;flex-direction:row;align-items:center;gap:12px;
