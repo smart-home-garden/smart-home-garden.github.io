@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eBook Katalog – smart.home.garden</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Alle kostenlosen eBooks und Guides von smart.home.garden – sortiert von A bis Z.">
+<style>
+  :root{
+    --bg:#0e0e0e; --card:#181818; --line:#2a2a2a;
+    --gold:#c9a24a; --green:#4f9a5c; --text:#f2f2f2; --muted:#a8a8a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+  .wrap{max-width:720px;margin:0 auto;padding:40px 16px 40px}
+
+  header{text-align:center;margin-bottom:32px}
+  .banner{display:block;width:100%;max-width:520px;height:auto;margin:0 auto 18px}
+  h1.handle{font-size:1.25rem;font-weight:600;letter-spacing:.03em;color:var(--gold)}
+  .sub{color:var(--muted);margin-top:6px}
+
+  /* A–Z Filter */
+  .az-bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 28px}
+  .az-bar button{
+    background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:5px 11px;border-radius:8px;font-size:.85rem;cursor:pointer;transition:all .15s
+  }
+  .az-bar button:hover{border-color:var(--gold);color:var(--gold)}
+  .az-bar button.active{background:var(--gold);border-color:var(--gold);color:#0e0e0e;font-weight:700}
+
+  .search-wrap{margin-bottom:24px;text-align:center}
+  .search-wrap input{
+    width:100%;max-width:440px;padding:11px 16px;border-radius:10px;
+    border:1px solid var(--line);background:#111;color:var(--text);
+    font-size:.95rem;outline:none
+  }
+  .search-wrap input:focus{border-color:var(--gold)}
+
+  /* 2-Spalten Grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:480px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    display:flex;flex-direction:column;gap:10px;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:18px;text-decoration:none;color:inherit;
+    transition:border-color .15s,transform .15s
+  }
+  .card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .card-icon{
+    width:44px;height:44px;border-radius:10px;
+    background:rgba(79,154,92,.15);color:var(--green);
+    display:grid;place-items:center;font-weight:700;font-size:.75rem;flex-shrink:0
+  }
+  .card h2{font-size:.97rem;line-height:1.3}
+  .card p{color:var(--muted);font-size:.85rem;flex:1}
+  .card .dl{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--gold);font-size:.82rem;font-weight:600;margin-top:4px
+  }
+
+  .empty{text-align:center;color:var(--muted);padding:48px 0;grid-column:1/-1}
+
+  nav.breadcrumb{margin-bottom:24px;font-size:.85rem;color:var(--muted)}
+  nav.breadcrumb a{color:var(--gold);text-decoration:none}
+  nav.breadcrumb a:hover{text-decoration:underline}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:48px;padding-top:16px;border-top:1px solid var(--line)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html">
+      <img class="banner" src="assets/logo-banner.svg" width="600" height="200" alt="smart.home.garden">
+    </a>
+    <h1 class="handle">eBook Katalog</h1>
+    <p class="sub">Alle kostenlosen Guides – sortiert von A bis Z</p>
+  </header>
+
+  <nav class="breadcrumb">
+    <a href="index.html">← Zurück zur Startseite</a>
+  </nav>
+
+  <div class="search-wrap">
+    <input type="search" id="searchInput" placeholder="Guide suchen …" autocomplete="off">
+  </div>
+
+  <div class="az-bar" id="azBar">
+    <button class="active" data-letter="alle">Alle</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <a href="index.html">Startseite</a> · <a href="#impressum">Impressum</a>
+    <p style="margin-top:8px">Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+  </footer>
+</div>
+
+<script>
+const beschreibungen = {
+  "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home" },
+  "mediterranepflanzen.pdf":      { titel: "Mediterrane Pflanzen richtig schneiden", info: "Olivenbaum bis Oleander – schneiden, überwintern, neu starten" },
+  "rasenguide.pdf":               { titel: "Vom Wildwuchs zum Traumrasen",           info: "Dein ehrlicher Schritt-für-Schritt-Guide zum satten Grün" },
+  "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten" },
+  "trockenmauer.pdf":             { titel: "Die Trockenmauer",                       info: "Bauen, bepflanzen, beleben – Naturstein ohne Mörtel" },
+};
+
+const REPO = "smart-home-garden/smart-home-garden.github.io";
+const grid = document.getElementById("grid");
+const azBar = document.getElementById("azBar");
+const searchInput = document.getElementById("searchInput");
+
+let allItems = [];
+let activeLetter = "alle";
+let searchTerm = "";
+
+function titelAusDateiname(datei) {
+  return datei.replace(/\.pdf$/i,"").replace(/[-_]+/g," ")
+    .replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+function buildAzBar(items) {
+  const letters = new Set();
+  items.forEach(({titel}) => {
+    const l = titel[0].toUpperCase();
+    if (/[A-Z]/.test(l)) letters.add(l);
+  });
+  const sorted = [...letters].sort();
+  sorted.forEach(l => {
+    const btn = document.createElement("button");
+    btn.textContent = l;
+    btn.dataset.letter = l;
+    btn.addEventListener("click", () => setLetter(l));
+    azBar.appendChild(btn);
+  });
+}
+
+function setLetter(l) {
+  activeLetter = l;
+  azBar.querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.letter === l));
+  render();
+}
+
+function render() {
+  const term = searchTerm.toLowerCase();
+  const filtered = allItems.filter(({titel, info}) => {
+    const matchLetter = activeLetter === "alle" || titel[0].toUpperCase() === activeLetter;
+    const matchSearch = !term || titel.toLowerCase().includes(term) || info.toLowerCase().includes(term);
+    return matchLetter && matchSearch;
+  });
+
+  filtered.sort((a,b) => a.titel.localeCompare(b.titel, "de"));
+
+  grid.innerHTML = "";
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="empty">Keine Guides gefunden.</p>';
+    return;
+  }
+  filtered.forEach(({datei, titel, info}) => {
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = "pdfs/" + encodeURIComponent(datei);
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.innerHTML = `
+      <div class="card-icon">PDF</div>
+      <h2>${titel}</h2>
+      <p>${info}</p>
+      <span class="dl">↓ Kostenlos herunterladen</span>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+searchInput.addEventListener("input", e => {
+  searchTerm = e.target.value;
+  if (searchTerm) setLetter("alle");
+  render();
+});
+
+azBar.querySelector("[data-letter='alle']").addEventListener("click", () => setLetter("alle"));
+
+fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
+  .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(items => {
+    allItems = items
+      .filter(f => f.type==="file" && /\.pdf$/i.test(f.name))
+      .map(f => {
+        const meta = beschreibungen[f.name] || {};
+        return {
+          datei: f.name,
+          titel: meta.titel || titelAusDateiname(f.name),
+          info: meta.info || "PDF zum Download"
+        };
+      });
+    buildAzBar(allItems);
+    render();
+  })
+  .catch(() => {
+    allItems = Object.entries(beschreibungen).map(([datei,meta]) => ({
+      datei, titel: meta.titel, info: meta.info
+    }));
+    buildAzBar(allItems);
+    render();
+  });
+</script>
+</body>
+</html>
