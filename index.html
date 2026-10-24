@@ -15,18 +15,19 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-  .wrap{max-width:640px;margin:0 auto;padding:40px 16px 24px}
+  .wrap{max-width:720px;margin:0 auto;padding:40px 16px 24px}
   header{text-align:center;margin-bottom:32px}
   .banner{display:block;width:100%;max-width:520px;height:auto;margin:0 auto 18px}
   h1.handle{font-size:1.25rem;font-weight:600;letter-spacing:.03em;color:var(--gold)}
   .sub{color:var(--muted);margin-top:6px}
-  .list{display:flex;flex-direction:column;gap:14px}
-  .item{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
-  .item:hover{border-color:var(--gold);transform:translateY(-1px)}
-  .icon{flex:0 0 44px;height:44px;border-radius:10px;background:rgba(79,154,92,.15);color:var(--green);display:grid;place-items:center;font-weight:700;font-size:.75rem}
-  .item h2{font-size:1.02rem}
-  .item p{color:var(--muted);font-size:.9rem}
-  .arrow{margin-left:auto;color:var(--gold);font-size:1.3rem}
+  .list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:500px){.list{grid-template-columns:1fr}}
+  .item{display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+  .item:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .icon{width:44px;height:44px;border-radius:10px;background:rgba(79,154,92,.15);color:var(--green);display:grid;place-items:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+  .item h2{font-size:.97rem;line-height:1.3}
+  .item p{color:var(--muted);font-size:.85rem;flex:1}
+  .arrow{color:var(--gold);font-size:.85rem;font-weight:600;margin-top:4px}
   .insta{display:block;text-align:center;margin:28px auto 0;color:var(--gold);text-decoration:none;font-weight:600}
   footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:40px;padding-top:16px;border-top:1px solid var(--line)}
   footer a{color:var(--muted)}
@@ -145,12 +146,11 @@
       a.href = "pdfs/" + encodeURIComponent(datei);
       a.target = "_blank";
       a.rel = "noopener";
+      const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = "PDF";
       const h2 = document.createElement("h2"); h2.textContent = meta.titel || titelAusDateiname(datei);
       const p = document.createElement("p");   p.textContent = meta.info || "PDF zum Download";
-      const text = document.createElement("div"); text.append(h2, p);
-      const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = "PDF";
-      const arrow = document.createElement("span"); arrow.className = "arrow"; arrow.textContent = "↓";
-      a.append(icon, text, arrow);
+      const arrow = document.createElement("span"); arrow.className = "arrow"; arrow.textContent = "↓ Kostenlos herunterladen";
+      a.append(icon, h2, p, arrow);
       list.appendChild(a);
     });
   }

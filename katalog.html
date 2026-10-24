@@ -104,11 +104,12 @@
 
 <script>
 const beschreibungen = {
-  "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home" },
+  // sortierTitel = Buchstabe unter dem das eBook im A-Z erscheint
+  "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home",          sortierTitel: "Garten, Der smarte Haus" },
   "mediterranepflanzen.pdf":      { titel: "Mediterrane Pflanzen richtig schneiden", info: "Olivenbaum bis Oleander – schneiden, überwintern, neu starten" },
   "rasenguide.pdf":               { titel: "Vom Wildwuchs zum Traumrasen",           info: "Dein ehrlicher Schritt-für-Schritt-Guide zum satten Grün" },
-  "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten" },
-  "trockenmauer.pdf":             { titel: "Die Trockenmauer",                       info: "Bauen, bepflanzen, beleben – Naturstein ohne Mörtel" },
+  "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten",               sortierTitel: "Beleuchtung und Steckdosen" },
+  "trockenmauer.pdf":             { titel: "Die Trockenmauer",                       info: "Bauen, bepflanzen, beleben – Naturstein ohne Mörtel",                sortierTitel: "Trockenmauer, Die" },
 };
 
 const REPO = "smart-home-garden/smart-home-garden.github.io";
@@ -125,10 +126,15 @@ function titelAusDateiname(datei) {
     .replace(/\b\w/g,c=>c.toUpperCase());
 }
 
+function sortKey(item) {
+  // sortierTitel bestimmt A-Z-Einordnung; fehlt er, wird der echte Titel genommen
+  return (item.sortierTitel || item.titel).toUpperCase();
+}
+
 function buildAzBar(items) {
   const letters = new Set();
-  items.forEach(({titel}) => {
-    const l = titel[0].toUpperCase();
+  items.forEach(item => {
+    const l = sortKey(item)[0];
     if (/[A-Z]/.test(l)) letters.add(l);
   });
   const sorted = [...letters].sort();
@@ -149,13 +155,13 @@ function setLetter(l) {
 
 function render() {
   const term = searchTerm.toLowerCase();
-  const filtered = allItems.filter(({titel, info}) => {
-    const matchLetter = activeLetter === "alle" || titel[0].toUpperCase() === activeLetter;
-    const matchSearch = !term || titel.toLowerCase().includes(term) || info.toLowerCase().includes(term);
+  const filtered = allItems.filter(item => {
+    const matchLetter = activeLetter === "alle" || sortKey(item)[0] === activeLetter;
+    const matchSearch = !term || item.titel.toLowerCase().includes(term) || item.info.toLowerCase().includes(term);
     return matchLetter && matchSearch;
   });
 
-  filtered.sort((a,b) => a.titel.localeCompare(b.titel, "de"));
+  filtered.sort((a,b) => sortKey(a).localeCompare(sortKey(b), "de"));
 
   grid.innerHTML = "";
   if (!filtered.length) {
@@ -196,7 +202,8 @@ fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
         return {
           datei: f.name,
           titel: meta.titel || titelAusDateiname(f.name),
-          info: meta.info || "PDF zum Download"
+          info: meta.info || "PDF zum Download",
+          sortierTitel: meta.sortierTitel || null
         };
       });
     buildAzBar(allItems);
@@ -204,7 +211,7 @@ fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
   })
   .catch(() => {
     allItems = Object.entries(beschreibungen).map(([datei,meta]) => ({
-      datei, titel: meta.titel, info: meta.info
+      datei, titel: meta.titel, info: meta.info, sortierTitel: meta.sortierTitel || null
     }));
     buildAzBar(allItems);
     render();
