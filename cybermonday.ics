@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//smart.home.garden//Cyber Monday//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:cybermonday-2026@smart-home-garden.github.io
+DTSTAMP:20261025T180000Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:Cyber Monday bei Amazon – smart.home.garden Deal-Liste
+DESCRIPTION:Heute ist Cyber Monday! Deine Deal-Liste mit allen Links: https://smart-home-garden.github.io/\nInstagram: https://www.instagram.com/smart.home.garden
+URL:https://smart-home-garden.github.io/
+LOCATION:amazon.de
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Morgen ist Cyber Monday – Deal-Liste bereitlegen!
+TRIGGER:-PT15H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Heute ist Cyber Monday bei Amazon!
+TRIGGER:PT8H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
