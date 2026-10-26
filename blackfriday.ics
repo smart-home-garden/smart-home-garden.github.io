@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//smart.home.garden//Black Friday//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:blackfriday-2026@smart-home-garden.github.io
+DTSTAMP:20261025T180000Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Black Friday bei Amazon – smart.home.garden Deal-Liste
+DESCRIPTION:Heute ist Black Friday! Deine Deal-Liste mit allen Links: https://smart-home-garden.github.io/\nInstagram: https://www.instagram.com/smart.home.garden
+URL:https://smart-home-garden.github.io/
+LOCATION:amazon.de
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Morgen ist Black Friday – Deal-Liste bereitlegen!
+TRIGGER:-PT15H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Heute ist Black Friday bei Amazon!
+TRIGGER:PT8H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
