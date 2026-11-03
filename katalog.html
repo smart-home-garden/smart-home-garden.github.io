@@ -175,6 +175,7 @@ function render() {
     a.href = "pdfs/" + encodeURIComponent(datei);
     a.target = "_blank";
     a.rel = "noopener";
+    a.addEventListener("click", () => zaehleDownload(datei));
     a.innerHTML = `
       <div class="card-icon">PDF</div>
       <div class="card-text"><h2>${titel}</h2><p>${info}</p></div>
@@ -216,6 +217,17 @@ fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
     buildAzBar(allItems);
     render();
   });
+</script>
+<!-- Besucher- und Download-Zähler (GoatCounter, ohne Cookies). Statistik nur für Sascha: https://smarthomegarden.goatcounter.com -->
+<script data-goatcounter="https://smarthomegarden.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  // Zählt einen Klick auf ein PDF als Download (path "download/<datei>")
+  function zaehleDownload(datei) {
+    try {
+      if (window.goatcounter && window.goatcounter.count)
+        window.goatcounter.count({ path: "download/" + datei, title: "Download: " + datei, event: true });
+    } catch (e) {}
+  }
 </script>
 </body>
 </html>

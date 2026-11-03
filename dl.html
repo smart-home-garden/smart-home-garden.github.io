@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Download – smart.home.garden</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>
+  body{background:#0e0e0e;color:#f2f2f2;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;padding:16px;text-align:center}
+  a{color:#c9a24a}
+</style>
+</head>
+<body>
+<p>Dein Download startet gleich …<br><a id="link" href="index.html">Falls nicht, hier tippen</a></p>
+<script>
+  /* ======================================================
+     ZÄHL-LINK FÜR INSTAGRAM & CO.
+     Aufruf: smart-home-garden.github.io/dl.html?trockenmauer
+     (Dateiname ohne .pdf). Zählt den Download bei GoatCounter
+     und öffnet dann direkt das PDF aus dem Ordner "pdfs".
+     ====================================================== */
+  (function () {
+    var roh = decodeURIComponent((location.search || "").replace(/^\?/, "").replace(/^f=/, "").split("&")[0]).trim();
+    var name = roh.replace(/\.pdf$/i, "");
+    if (!/^[a-z0-9._-]+$/i.test(name)) { location.replace("index.html"); return; }
+    var datei = name + ".pdf";
+    var ziel = "pdfs/" + datei;
+    document.getElementById("link").href = ziel;
+
+    var weiter = false;
+    function los() { if (!weiter) { weiter = true; location.replace(ziel); } }
+
+    var url = "https://smarthomegarden.goatcounter.com/count"
+      + "?p=" + encodeURIComponent("download/" + datei)
+      + "&t=" + encodeURIComponent("Download: " + datei)
+      + "&e=true"
+      + "&r=" + encodeURIComponent(document.referrer || "")
+      + "&s=" + encodeURIComponent([screen.width, screen.height, window.devicePixelRatio || 1].join(","))
+      + "&rnd=" + Math.random().toString(36).slice(2);
+    var img = new Image();
+    img.onload = img.onerror = los;
+    img.src = url;
+    setTimeout(los, 1200);
+  })();
+</script>
+</body>
+</html>
