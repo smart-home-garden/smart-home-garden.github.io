@@ -176,7 +176,11 @@
     }
     if (r.status === 401 || r.status === 403) { const err = new Error("API-Schlüssel ungültig oder ohne Leserecht."); err.auth = true; throw err; }
     if (r.status === 429) throw new Error("Zu viele Anfragen – bitte eine Minute warten.");
-    if (!r.ok) throw new Error("GoatCounter antwortet mit Fehler " + r.status + ".");
+    if (!r.ok) {
+      let info = "";
+      try { info = (await r.text()).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160); } catch(e) {}
+      throw new Error("GoatCounter antwortet mit Fehler " + r.status + " bei " + pfad + (info ? " – " + info : "") + ".");
+    }
     return r.json();
   }
 
@@ -184,7 +188,7 @@
   async function alleHits(z){
     let out = [], exclude = [];
     for (let i = 0; i < 10; i++) {
-      const p = { start: z.start, end: z.end, limit: 100, daily: "true" };
+      const p = { start: z.start + "T00:00:00Z", end: z.end + "T23:59:59Z", limit: 100 };
       if (exclude.length) p.exclude_paths = exclude.join(",");
       const d = await api("/stats/hits", p);
       const hits = d.hits || [];
@@ -245,8 +249,8 @@
     try {
       const [hits, refs, locs] = await Promise.all([
         alleHits(z),
-        api("/stats/toprefs", { start: z.start, end: z.end, limit: 8 }).catch(() => ({ stats: [] })),
-        api("/stats/locations", { start: z.start, end: z.end, limit: 8 }).catch(() => ({ stats: [] })),
+        api("/stats/toprefs", { start: z.start + "T00:00:00Z", end: z.end + "T23:59:59Z", limit: 8 }).catch(() => ({ stats: [] })),
+        api("/stats/locations", { start: z.start + "T00:00:00Z", end: z.end + "T23:59:59Z", limit: 8 }).catch(() => ({ stats: [] })),
       ]);
 
       const seiten = hits.filter(h => !h.event);
