@@ -39,6 +39,11 @@
   }
   .search-wrap input:focus{border-color:var(--gold)}
 
+  .kat-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 14px}
+  .kat-bar button{background:var(--card);border:1px solid var(--line);color:var(--text);padding:7px 14px;border-radius:20px;font-size:.88rem;cursor:pointer;transition:all .15s}
+  .kat-bar button:hover{border-color:var(--green);color:var(--green)}
+  .kat-bar button.active{background:var(--green);border-color:var(--green);color:#0e0e0e;font-weight:700}
+
   .grid{display:flex;flex-direction:column;gap:14px}
 
   .card{
@@ -77,7 +82,7 @@
       <img class="banner" src="assets/logo-banner.svg" width="600" height="200" alt="smart.home.garden">
     </a>
     <h1 class="handle">eBook Katalog</h1>
-    <p class="sub">Alle kostenlosen Guides – sortiert von A bis Z</p>
+    <p class="sub">Alle kostenlosen Guides – nach Thema oder von A bis Z</p>
   </header>
 
   <nav class="breadcrumb">
@@ -86,6 +91,14 @@
 
   <div class="search-wrap">
     <input type="search" id="searchInput" placeholder="Guide suchen …" autocomplete="off">
+  </div>
+
+  <div class="kat-bar" id="katBar">
+    <button class="active" data-kat="alle">Alle Themen</button>
+    <button data-kat="Smart Home & Technik">Smart Home &amp; Technik</button>
+    <button data-kat="Sicherheit">Sicherheit</button>
+    <button data-kat="Rasen">Rasen</button>
+    <button data-kat="Garten & Pflanzen">Garten &amp; Pflanzen</button>
   </div>
 
   <div class="az-bar" id="azBar">
@@ -103,15 +116,15 @@
 <script>
 const beschreibungen = {
   // sortierTitel = Buchstabe unter dem das eBook im A-Z erscheint
-  "blackfriday.pdf":              { titel: "Black Friday Deal-Liste",                info: "Alle Empfehlungen aus meinen E-Books – sortiert & verlinkt für den Black Friday", sortierTitel: "Black Friday Deal-Liste" },
-  "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home",          sortierTitel: "Garten, Der smarte Haus" },
-  "einbruchschutz.pdf":           { titel: "Sicher zu Hause – Einbruchschutz",      info: "Tür, Fenster, Licht, Kamera: dein Plan für Wohnung und Haus",      sortierTitel: "Einbruchschutz: Sicher zu Hause" },
-  "maehroboter.pdf":              { titel: "Mähroboter – Wer die Wahl hat, hat die Qual", info: "Der große Mähroboter-Guide: Draht, RTK, LiDAR oder KI-Kamera",      sortierTitel: "Mähroboter: Wer die Wahl hat, hat die Qual" },
-  "mediterranepflanzen.pdf":      { titel: "Mediterrane Pflanzen richtig schneiden", info: "Olivenbaum bis Oleander – schneiden, überwintern, neu starten" },
-  "rasenguide.pdf":               { titel: "Vom Wildwuchs zum Traumrasen",           info: "Dein ehrlicher Schritt-für-Schritt-Guide zum satten Grün",           sortierTitel: "Rasen: Vom Wildwuchs zum Traumrasen" },
-  "rasen-bewaessern.pdf":        { titel: "Den perfekten Rasen richtig bewässern",  info: "Bewässerungssysteme, Regner & smarte Steuerung für deinen Rasen",   sortierTitel: "Rasen: Bewässern" },
-  "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten",               sortierTitel: "Beleuchtung und Steckdosen" },
-  "trockenmauer.pdf":             { titel: "Die Trockenmauer",                       info: "Bauen, bepflanzen, beleben – Naturstein ohne Mörtel",                sortierTitel: "Trockenmauer, Die" },
+  "blackfriday.pdf":              { titel: "Black Friday Deal-Liste",                info: "Alle Empfehlungen aus meinen E-Books – sortiert & verlinkt für den Black Friday", sortierTitel: "Black Friday Deal-Liste", kategorie: "Aktion" },
+  "dersmartehausgarten.pdf":      { titel: "Der smarte Hausgarten",                  info: "Dein kompletter Leitfaden: Planung, Technik & Smart Home",          sortierTitel: "Garten, Der smarte Haus", kategorie: "Smart Home & Technik" },
+  "einbruchschutz.pdf":           { titel: "Sicher zu Hause – Einbruchschutz",      info: "Tür, Fenster, Licht, Kamera: dein Plan für Wohnung und Haus",      sortierTitel: "Einbruchschutz: Sicher zu Hause", kategorie: "Sicherheit" },
+  "maehroboter.pdf":              { titel: "Mähroboter – Wer die Wahl hat, hat die Qual", info: "Der große Mähroboter-Guide: Draht, RTK, LiDAR oder KI-Kamera",      sortierTitel: "Mähroboter: Wer die Wahl hat, hat die Qual", kategorie: "Rasen" },
+  "mediterranepflanzen.pdf":      { titel: "Mediterrane Pflanzen richtig schneiden", info: "Olivenbaum bis Oleander – schneiden, überwintern, neu starten", kategorie: "Garten & Pflanzen" },
+  "rasenguide.pdf":               { titel: "Vom Wildwuchs zum Traumrasen",           info: "Dein ehrlicher Schritt-für-Schritt-Guide zum satten Grün",           sortierTitel: "Rasen: Vom Wildwuchs zum Traumrasen", kategorie: "Rasen" },
+  "rasen-bewaessern.pdf":        { titel: "Den perfekten Rasen richtig bewässern",  info: "Bewässerungssysteme, Regner & smarte Steuerung für deinen Rasen",   sortierTitel: "Rasen: Bewässern", kategorie: "Rasen" },
+  "steckdosenundbeleuchtung.pdf": { titel: "Steckdosen und Beleuchtung",             info: "Das elektrische Fundament für deinen smarten Garten",               sortierTitel: "Beleuchtung und Steckdosen", kategorie: "Smart Home & Technik" },
+  "trockenmauer.pdf":             { titel: "Die Trockenmauer",                       info: "Bauen, bepflanzen, beleben – Naturstein ohne Mörtel",                sortierTitel: "Trockenmauer, Die", kategorie: "Garten & Pflanzen" },
 };
 
 const REPO = "smart-home-garden/smart-home-garden.github.io";
@@ -121,6 +134,8 @@ const searchInput = document.getElementById("searchInput");
 
 let allItems = [];
 let activeLetter = "alle";
+let activeKat = "alle";
+const katBar = document.getElementById("katBar");
 let searchTerm = "";
 
 function titelAusDateiname(datei) {
@@ -159,8 +174,9 @@ function render() {
   const term = searchTerm.toLowerCase();
   const filtered = allItems.filter(item => {
     const matchLetter = activeLetter === "alle" || sortKey(item)[0] === activeLetter;
+    const matchKat = activeKat === "alle" || item.kategorie === activeKat;
     const matchSearch = !term || item.titel.toLowerCase().includes(term) || item.info.toLowerCase().includes(term);
-    return matchLetter && matchSearch;
+    return matchLetter && matchKat && matchSearch;
   });
 
   filtered.sort((a,b) => sortKey(a).localeCompare(sortKey(b), "de"));
@@ -192,6 +208,12 @@ searchInput.addEventListener("input", e => {
   render();
 });
 
+katBar.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+  activeKat = btn.dataset.kat;
+  katBar.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+  render();
+}));
+
 azBar.querySelector("[data-letter='alle']").addEventListener("click", () => setLetter("alle"));
 
 fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
@@ -205,7 +227,8 @@ fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
           datei: f.name,
           titel: meta.titel || titelAusDateiname(f.name),
           info: meta.info || "PDF zum Download",
-          sortierTitel: meta.sortierTitel || null
+          sortierTitel: meta.sortierTitel || null,
+          kategorie: meta.kategorie || null
         };
       });
     buildAzBar(allItems);
@@ -213,7 +236,7 @@ fetch("https://api.github.com/repos/" + REPO + "/contents/pdfs")
   })
   .catch(() => {
     allItems = Object.entries(beschreibungen).map(([datei,meta]) => ({
-      datei, titel: meta.titel, info: meta.info, sortierTitel: meta.sortierTitel || null
+      datei, titel: meta.titel, info: meta.info, sortierTitel: meta.sortierTitel || null, kategorie: meta.kategorie || null
     }));
     buildAzBar(allItems);
     render();
